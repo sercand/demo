@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: demo-http
+  labels:
+    app: demo-http
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: demo-http
+    spec:
+      containers:
+        - image: sercand/demo-node-js:1.0
+          name: demo
+          ports:
+            - containerPort: 3000
