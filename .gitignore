@@ -23,3 +23,9 @@ _testmain.go
 *.test
 *.prof
 node_modules
+typings
+typings.json
+jsconfig.json
+
+.idea
+bin
