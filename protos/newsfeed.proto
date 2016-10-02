@@ -1,0 +1,26 @@
+syntax = "proto3";
+package feed.v1;
+option go_package = "feedpb";
+
+message FeedItem {
+    message ProviderInfo {
+        string id = 1;
+        string ip = 2;
+    }
+    string title = 1;
+    string color = 2;
+    string text = 3;
+    ProviderInfo info = 4;
+}
+
+message FeedGetRequest{
+    int32 limit = 1;
+}
+
+message FeedGetResponse{
+    repeated FeedItem items = 1;
+}
+
+service NewsFeed{
+    rpc Get(FeedGetRequest) returns (FeedGetResponse);
+}

@@ -1,0 +1,14 @@
+syntax = "proto3";
+package feed.v1;
+option go_package = "feedpb";
+
+import "newsfeed.proto";
+
+message ProviderGetRequest{
+    FeedGetRequest request = 1;
+}
+
+service FeedProvider{
+    rpc Get(ProviderGetRequest) returns (FeedGetResponse);
+}
+
