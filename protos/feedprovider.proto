@@ -2,7 +2,7 @@ syntax = "proto3";
 package feed.v1;
 option go_package = "feedpb";
 
-import "newsfeed.proto";
+import "common.proto";
 
 message ProviderGetRequest{
     FeedGetRequest request = 1;

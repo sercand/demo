@@ -16,10 +16,29 @@
 			"path": "/internal"
 		},
 		{
+			"importpath": "github.com/codegangsta/negroni",
+			"repository": "https://github.com/codegangsta/negroni",
+			"revision": "3f7ce7b928e14ff890b067e5bbbc80af73690a9c",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/dghubble/sling",
+			"repository": "https://github.com/dghubble/sling",
+			"revision": "52e88a7b75a5db3b49f8911f16d49d9b7b67adc5",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/golang/glog",
 			"repository": "https://github.com/golang/glog",
 			"revision": "23def4e6c14b4da8ac2ed8007337bc5eb5007998",
 			"branch": "master"
+		},
+		{
+			"importpath": "github.com/golang/protobuf/jsonpb",
+			"repository": "https://github.com/golang/protobuf",
+			"revision": "df1d3ca07d2d07bba352d5b73c4313b4e2a6203e",
+			"branch": "master",
+			"path": "/jsonpb"
 		},
 		{
 			"importpath": "github.com/golang/protobuf/proto",
@@ -34,6 +53,53 @@
 			"revision": "1f49d83d9aa00e6ce4fc8258c71cc7786aec968a",
 			"branch": "master",
 			"path": "/protoc-gen-go/descriptor"
+		},
+		{
+			"importpath": "github.com/golang/protobuf/protoc-gen-go/generator",
+			"repository": "https://github.com/golang/protobuf",
+			"revision": "df1d3ca07d2d07bba352d5b73c4313b4e2a6203e",
+			"branch": "master",
+			"path": "/protoc-gen-go/generator"
+		},
+		{
+			"importpath": "github.com/golang/protobuf/protoc-gen-go/plugin",
+			"repository": "https://github.com/golang/protobuf",
+			"revision": "df1d3ca07d2d07bba352d5b73c4313b4e2a6203e",
+			"branch": "master",
+			"path": "/protoc-gen-go/plugin"
+		},
+		{
+			"importpath": "github.com/golang/protobuf/ptypes/empty",
+			"repository": "https://github.com/golang/protobuf",
+			"revision": "df1d3ca07d2d07bba352d5b73c4313b4e2a6203e",
+			"branch": "master",
+			"path": "/ptypes/empty"
+		},
+		{
+			"importpath": "github.com/golang/protobuf/ptypes/timestamp",
+			"repository": "https://github.com/golang/protobuf",
+			"revision": "df1d3ca07d2d07bba352d5b73c4313b4e2a6203e",
+			"branch": "master",
+			"path": "/ptypes/timestamp"
+		},
+		{
+			"importpath": "github.com/google/go-querystring/query",
+			"repository": "https://github.com/google/go-querystring",
+			"revision": "9235644dd9e52eeae6fa48efd539fdc351a0af53",
+			"branch": "master",
+			"path": "/query"
+		},
+		{
+			"importpath": "github.com/grpc-ecosystem/grpc-gateway",
+			"repository": "https://github.com/grpc-ecosystem/grpc-gateway",
+			"revision": "acebe0f9ff5993e130b141ee60e83e592839ca22",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/rogpeppe/fastuuid",
+			"repository": "https://github.com/rogpeppe/fastuuid",
+			"revision": "6724a57986aff9bff1a1770e9347036def7c89f6",
+			"branch": "master"
 		},
 		{
 			"importpath": "github.com/sercand/kuberesolver",
