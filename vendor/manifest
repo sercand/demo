@@ -36,6 +36,12 @@
 			"path": "/protoc-gen-go/descriptor"
 		},
 		{
+			"importpath": "github.com/sercand/kuberesolver",
+			"repository": "https://github.com/sercand/kuberesolver",
+			"revision": "2f561e34ecb6206fcad82f0c5842379188d8db40",
+			"branch": "master"
+		},
+		{
 			"importpath": "golang.org/x/net/context",
 			"repository": "https://go.googlesource.com/net",
 			"revision": "f4fe4abe3c785295ddf81c7f1823bcd3bad391b6",
