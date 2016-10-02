@@ -1,0 +1,14 @@
+{
+  "name": "feed-node",
+  "version": "1.0.0",
+  "description": "Demo server for grpc",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "grpc": "^1.0.0"
+  }
+}
