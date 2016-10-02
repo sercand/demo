@@ -29,8 +29,10 @@ type newsFeedServer struct {
 	clients  []pb.FeedProviderClient
 	balancer *kuberesolver.Balancer
 }
+
 //Implement feedpb.NewsFeedServer
 func (s *newsFeedServer) Get(ctx context.Context, in *pb.FeedGetRequest) (*pb.FeedGetResponse, error) {
+	grpclog.Printf("newsFeedServer.Get(_):%v", in)
 	r := new(pb.FeedGetResponse)
 	for _, c := range s.clients {
 		resp, err := c.Get(ctx, &pb.ProviderGetRequest{Request: in})
@@ -38,6 +40,9 @@ func (s *newsFeedServer) Get(ctx context.Context, in *pb.FeedGetRequest) (*pb.Fe
 			return nil, err
 		}
 		r.Items = append(r.Items, resp.Items...)
+	}
+	if in.Limit != 0 && len(r.Items) > int(in.Limit) {
+		r.Items = r.Items[:in.Limit]
 	}
 	return r, nil
 }
