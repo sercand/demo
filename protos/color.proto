@@ -1,0 +1,15 @@
+syntax = "proto3";
+package feed.v1;
+option go_package = "feedpb";
+
+
+message Color {
+    string hex = 1;
+}
+
+message NewColorRequest {
+}
+
+service ColorGenerator {
+    rpc Next (NewColorRequest) returns (Color);
+}

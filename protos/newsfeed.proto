@@ -5,8 +5,8 @@ option go_package = "feedpb";
 import "google/api/annotations.proto";
 import "common.proto";
 
-service NewsFeed{
-    rpc Get(FeedGetRequest) returns (FeedGetResponse){
+service NewsFeed {
+    rpc Get (FeedGetRequest) returns (FeedGetResponse) {
         option (google.api.http) = {
 			get: "/feed/v1/get"
 		};

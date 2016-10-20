@@ -2,20 +2,6 @@
 // source: common.proto
 // DO NOT EDIT!
 
-/*
-	Package feedpb is a generated protocol buffer package.
-
-	It is generated from these files:
-		common.proto
-		feedprovider.proto
-		newsfeed.proto
-
-	It has these top-level messages:
-		FeedItem
-		FeedGetRequest
-		FeedGetResponse
-		ProviderGetRequest
-*/
 package feedpb
 
 import proto "github.com/golang/protobuf/proto"
@@ -29,40 +15,18 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
-
 type FeedItem struct {
-	Title string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
-	Color string                 `protobuf:"bytes,2,opt,name=color,proto3" json:"color,omitempty"`
-	Text  string                 `protobuf:"bytes,3,opt,name=text,proto3" json:"text,omitempty"`
-	Info  *FeedItem_ProviderInfo `protobuf:"bytes,4,opt,name=info" json:"info,omitempty"`
+	Title        string `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
+	Color        string `protobuf:"bytes,2,opt,name=color,proto3" json:"color,omitempty"`
+	Text         string `protobuf:"bytes,3,opt,name=text,proto3" json:"text,omitempty"`
+	ProviderName string `protobuf:"bytes,4,opt,name=provider_name,json=providerName,proto3" json:"provider_name,omitempty"`
+	Score        int32  `protobuf:"varint,5,opt,name=score,proto3" json:"score,omitempty"`
 }
 
 func (m *FeedItem) Reset()                    { *m = FeedItem{} }
 func (m *FeedItem) String() string            { return proto.CompactTextString(m) }
 func (*FeedItem) ProtoMessage()               {}
 func (*FeedItem) Descriptor() ([]byte, []int) { return fileDescriptorCommon, []int{0} }
-
-func (m *FeedItem) GetInfo() *FeedItem_ProviderInfo {
-	if m != nil {
-		return m.Info
-	}
-	return nil
-}
-
-type FeedItem_ProviderInfo struct {
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Ip string `protobuf:"bytes,2,opt,name=ip,proto3" json:"ip,omitempty"`
-}
-
-func (m *FeedItem_ProviderInfo) Reset()                    { *m = FeedItem_ProviderInfo{} }
-func (m *FeedItem_ProviderInfo) String() string            { return proto.CompactTextString(m) }
-func (*FeedItem_ProviderInfo) ProtoMessage()               {}
-func (*FeedItem_ProviderInfo) Descriptor() ([]byte, []int) { return fileDescriptorCommon, []int{0, 0} }
 
 type FeedGetRequest struct {
 	Limit int32 `protobuf:"varint,1,opt,name=limit,proto3" json:"limit,omitempty"`
@@ -91,7 +55,6 @@ func (m *FeedGetResponse) GetItems() []*FeedItem {
 
 func init() {
 	proto.RegisterType((*FeedItem)(nil), "feed.v1.FeedItem")
-	proto.RegisterType((*FeedItem_ProviderInfo)(nil), "feed.v1.FeedItem.ProviderInfo")
 	proto.RegisterType((*FeedGetRequest)(nil), "feed.v1.FeedGetRequest")
 	proto.RegisterType((*FeedGetResponse)(nil), "feed.v1.FeedGetResponse")
 }
@@ -128,45 +91,16 @@ func (m *FeedItem) MarshalTo(data []byte) (int, error) {
 		i = encodeVarintCommon(data, i, uint64(len(m.Text)))
 		i += copy(data[i:], m.Text)
 	}
-	if m.Info != nil {
+	if len(m.ProviderName) > 0 {
 		data[i] = 0x22
 		i++
-		i = encodeVarintCommon(data, i, uint64(m.Info.Size()))
-		n1, err := m.Info.MarshalTo(data[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n1
+		i = encodeVarintCommon(data, i, uint64(len(m.ProviderName)))
+		i += copy(data[i:], m.ProviderName)
 	}
-	return i, nil
-}
-
-func (m *FeedItem_ProviderInfo) Marshal() (data []byte, err error) {
-	size := m.Size()
-	data = make([]byte, size)
-	n, err := m.MarshalTo(data)
-	if err != nil {
-		return nil, err
-	}
-	return data[:n], nil
-}
-
-func (m *FeedItem_ProviderInfo) MarshalTo(data []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if len(m.Id) > 0 {
-		data[i] = 0xa
+	if m.Score != 0 {
+		data[i] = 0x28
 		i++
-		i = encodeVarintCommon(data, i, uint64(len(m.Id)))
-		i += copy(data[i:], m.Id)
-	}
-	if len(m.Ip) > 0 {
-		data[i] = 0x12
-		i++
-		i = encodeVarintCommon(data, i, uint64(len(m.Ip)))
-		i += copy(data[i:], m.Ip)
+		i = encodeVarintCommon(data, i, uint64(m.Score))
 	}
 	return i, nil
 }
@@ -266,23 +200,12 @@ func (m *FeedItem) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovCommon(uint64(l))
 	}
-	if m.Info != nil {
-		l = m.Info.Size()
-		n += 1 + l + sovCommon(uint64(l))
-	}
-	return n
-}
-
-func (m *FeedItem_ProviderInfo) Size() (n int) {
-	var l int
-	_ = l
-	l = len(m.Id)
+	l = len(m.ProviderName)
 	if l > 0 {
 		n += 1 + l + sovCommon(uint64(l))
 	}
-	l = len(m.Ip)
-	if l > 0 {
-		n += 1 + l + sovCommon(uint64(l))
+	if m.Score != 0 {
+		n += 1 + sovCommon(uint64(m.Score))
 	}
 	return n
 }
@@ -439,90 +362,7 @@ func (m *FeedItem) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Info", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCommon
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCommon
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Info == nil {
-				m.Info = &FeedItem_ProviderInfo{}
-			}
-			if err := m.Info.Unmarshal(data[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipCommon(data[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthCommon
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *FeedItem_ProviderInfo) Unmarshal(data []byte) error {
-	l := len(data)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowCommon
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := data[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ProviderInfo: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ProviderInfo: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ProviderName", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -547,13 +387,13 @@ func (m *FeedItem_ProviderInfo) Unmarshal(data []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Id = string(data[iNdEx:postIndex])
+			m.ProviderName = string(data[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Ip", wireType)
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Score", wireType)
 			}
-			var stringLen uint64
+			m.Score = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowCommon
@@ -563,21 +403,11 @@ func (m *FeedItem_ProviderInfo) Unmarshal(data []byte) error {
 				}
 				b := data[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				m.Score |= (int32(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthCommon
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Ip = string(data[iNdEx:postIndex])
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipCommon(data[iNdEx:])
@@ -857,22 +687,21 @@ var (
 func init() { proto.RegisterFile("common.proto", fileDescriptorCommon) }
 
 var fileDescriptorCommon = []byte{
-	// 258 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x64, 0x90, 0xb1, 0x4a, 0xc4, 0x40,
-	0x10, 0x86, 0xdd, 0xdc, 0xe5, 0xd4, 0xb9, 0xe3, 0xc4, 0xc5, 0x62, 0xb1, 0x08, 0x21, 0x85, 0xa6,
-	0x5a, 0x30, 0x76, 0x96, 0x16, 0xca, 0x75, 0x92, 0xd2, 0xf2, 0x6e, 0x27, 0xb0, 0x90, 0xcd, 0xac,
-	0xc9, 0x78, 0xf8, 0x28, 0x3e, 0x85, 0xcf, 0x61, 0xe9, 0x23, 0x48, 0x7c, 0x11, 0xc9, 0x26, 0x8a,
-	0x60, 0xb7, 0xff, 0xb7, 0xff, 0xcc, 0xff, 0x33, 0xb0, 0xda, 0x91, 0x73, 0xd4, 0x68, 0xdf, 0x12,
-	0x93, 0x3c, 0xac, 0x10, 0x8d, 0xde, 0x5f, 0x65, 0x6f, 0x02, 0x8e, 0xee, 0x10, 0xcd, 0x86, 0xd1,
-	0xc9, 0x33, 0x88, 0xd9, 0x72, 0x8d, 0x4a, 0xa4, 0x22, 0x3f, 0x2e, 0x47, 0x31, 0xd0, 0x1d, 0xd5,
-	0xd4, 0xaa, 0x68, 0xa4, 0x41, 0x48, 0x09, 0x73, 0xc6, 0x17, 0x56, 0xb3, 0x00, 0xc3, 0x5b, 0x16,
-	0x30, 0xb7, 0x4d, 0x45, 0x6a, 0x9e, 0x8a, 0x7c, 0x59, 0x24, 0x7a, 0x0a, 0xd1, 0x3f, 0x01, 0xfa,
-	0xa1, 0xa5, 0xbd, 0x35, 0xd8, 0x6e, 0x9a, 0x8a, 0xca, 0xe0, 0x3d, 0xd7, 0xb0, 0xfa, 0x4b, 0xe5,
-	0x1a, 0x22, 0x6b, 0xa6, 0x02, 0x91, 0x35, 0x41, 0xfb, 0x29, 0x3a, 0xb2, 0x3e, 0xbb, 0x80, 0xf5,
-	0xb0, 0xee, 0x1e, 0xb9, 0xc4, 0xa7, 0x67, 0xec, 0x78, 0xe8, 0x57, 0x5b, 0x67, 0x39, 0x0c, 0xc5,
-	0xe5, 0x28, 0xb2, 0x1b, 0x38, 0xf9, 0xf5, 0x75, 0x9e, 0x9a, 0x0e, 0xe5, 0x25, 0xc4, 0x96, 0xd1,
-	0x75, 0x4a, 0xa4, 0xb3, 0x7c, 0x59, 0x9c, 0xfe, 0xeb, 0x57, 0x8e, 0xff, 0xb7, 0xea, 0xbd, 0x4f,
-	0xc4, 0x47, 0x9f, 0x88, 0xcf, 0x3e, 0x11, 0xaf, 0x5f, 0xc9, 0xc1, 0xe3, 0x62, 0xb0, 0xfa, 0xed,
-	0x76, 0x11, 0xce, 0x77, 0xfd, 0x1d, 0x00, 0x00, 0xff, 0xff, 0x8d, 0x88, 0x1f, 0x2d, 0x4e, 0x01,
-	0x00, 0x00,
+	// 243 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x3c, 0x90, 0x31, 0x4e, 0xc4, 0x30,
+	0x10, 0x45, 0x31, 0xbb, 0x5e, 0x60, 0x58, 0x40, 0x58, 0x14, 0xae, 0xa2, 0x28, 0x48, 0x90, 0x2a,
+	0x12, 0xd0, 0x51, 0x52, 0x80, 0x68, 0x28, 0x5c, 0xd2, 0xa0, 0xdd, 0x64, 0x90, 0x2c, 0xc5, 0x99,
+	0x60, 0x0f, 0x2b, 0x2e, 0xc0, 0x1d, 0x38, 0x12, 0x25, 0x47, 0x40, 0xe1, 0x22, 0x28, 0x36, 0xa1,
+	0xf3, 0x7b, 0xf3, 0x65, 0xcd, 0x1f, 0x58, 0xd6, 0xe4, 0x1c, 0x75, 0x55, 0xef, 0x89, 0x49, 0xed,
+	0x3c, 0x23, 0x36, 0xd5, 0xe6, 0xa2, 0x78, 0x17, 0xb0, 0x7b, 0x8b, 0xd8, 0xdc, 0x33, 0x3a, 0x75,
+	0x02, 0x92, 0x2d, 0xb7, 0xa8, 0x45, 0x2e, 0xca, 0x3d, 0x93, 0x60, 0xb4, 0x35, 0xb5, 0xe4, 0xf5,
+	0x76, 0xb2, 0x11, 0x94, 0x82, 0x39, 0xe3, 0x1b, 0xeb, 0x59, 0x94, 0xf1, 0xad, 0x4e, 0xe1, 0xa0,
+	0xf7, 0xb4, 0xb1, 0x0d, 0xfa, 0xa7, 0x6e, 0xe5, 0x50, 0xcf, 0xe3, 0x70, 0x39, 0xc9, 0x87, 0x95,
+	0x8b, 0xdf, 0x85, 0x9a, 0x3c, 0x6a, 0x99, 0x8b, 0x52, 0x9a, 0x04, 0xc5, 0x19, 0x1c, 0x8e, 0x6b,
+	0xdc, 0x21, 0x1b, 0x7c, 0x79, 0xc5, 0xc0, 0x63, 0xae, 0xb5, 0xce, 0x72, 0x5c, 0x46, 0x9a, 0x04,
+	0xc5, 0x35, 0x1c, 0xfd, 0xe7, 0x42, 0x4f, 0x5d, 0x40, 0x75, 0x0e, 0xd2, 0x32, 0xba, 0xa0, 0x45,
+	0x3e, 0x2b, 0xf7, 0x2f, 0x8f, 0xab, 0xbf, 0x6e, 0xd5, 0xd4, 0xcb, 0xa4, 0xf9, 0x8d, 0xfe, 0x1c,
+	0x32, 0xf1, 0x35, 0x64, 0xe2, 0x7b, 0xc8, 0xc4, 0xc7, 0x4f, 0xb6, 0xf5, 0xb8, 0x18, 0xa3, 0xfd,
+	0x7a, 0xbd, 0x88, 0x57, 0xb9, 0xfa, 0x0d, 0x00, 0x00, 0xff, 0xff, 0xf9, 0xea, 0x71, 0x90, 0x25,
+	0x01, 0x00, 0x00,
 }

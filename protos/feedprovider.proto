@@ -4,11 +4,11 @@ option go_package = "feedpb";
 
 import "common.proto";
 
-message ProviderGetRequest{
+message ProviderGetRequest {
     FeedGetRequest request = 1;
 }
 
-service FeedProvider{
-    rpc Get(ProviderGetRequest) returns (FeedGetResponse);
+service FeedProvider {
+    rpc Get (ProviderGetRequest) returns (FeedGetResponse);
 }
 

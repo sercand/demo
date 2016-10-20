@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: feed-aggregator
+  name: feed-aggregator
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: "20%"
+  template:
+    metadata:
+      labels:
+        app: feed-aggregator
+      name: feed-aggregator
+    spec:
+      containers:
+      - name: feed-aggregator
+        image: sercand/demo-feed-aggregator:1.16
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DEMO_COLOR
+          value: kubernetes://color-generator:4000
+        - name: DEMO_CONFIG_FILE
+          value: /opt/aggregator-config/config.json
+        ports:
+        - containerPort: 3010
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /opt/aggregator-config
+          name: aggregator-config
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: aggregator-config
+        name: aggregator-config

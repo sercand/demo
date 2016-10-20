@@ -5,5 +5,5 @@ var server = http.createServer(function (request, response) {
     console.log(request.connection.remoteAddress, request.url, request.method)
 });
 var port = 3000;
-console.log("starting V2 demo application on", port);
+console.log("starting demo application on", port);
 server.listen(port);

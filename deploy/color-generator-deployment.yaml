@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: color-generator
+  name: color-generator
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: "20%"
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: color-generator
+      name: color-generator
+    spec:
+      containers:
+      - image: sercand/demo-color-generator:1.16
+        imagePullPolicy: IfNotPresent
+        name: color-generator
+        ports:
+        - containerPort: 4000
+          protocol: TCP
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always

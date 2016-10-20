@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: "20%"
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: frontend
+      name: frontend
+    spec:
+      volumes:
+        - name: cert-demo
+          secret:
+            secretName: cert-demo-sercand-com
+      containers:
+      - env:
+        - name: DEMO_ENDPOINT
+          value: kubernetes://feed-aggregator:3010
+        - name: DEMO_COLOR
+          value: kubernetes://color-generator:4000
+        - name: DEMO_TEMPLATE
+          value: /demo/index.html
+        - name: DEMO_TLS_CERT
+          value: /etc/tls/cert-demo/tls.crt
+        - name: DEMO_TLS_KEY
+          value: /etc/tls/cert-demo/tls.key
+        image: sercand/demo-frontend:1.16
+        name: frontend
+        ports:
+        - containerPort: 3030
+          protocol: TCP
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+          - name: cert-demo
+            mountPath: /etc/tls/cert-demo

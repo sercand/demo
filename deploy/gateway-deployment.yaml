@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: gateway
+  name: gateway
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: "20%"
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: gateway
+      name: gateway
+    spec:
+      volumes:
+        - name: cert-demo
+          secret:
+            secretName: cert-api-sercand-com
+      containers:
+      - name: gateway
+        env:
+        - name: DEMO_NEWSFEED_ENDPOINT
+          value: kubernetes://feed-aggregator:3010
+        - name: DEMO_TLS_CERT
+          value: /etc/tls/cert-demo/tls.crt
+        - name: DEMO_TLS_KEY
+          value: /etc/tls/cert-demo/tls.key
+        image: sercand/demo-gateway:1.16
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+          - name: cert-demo
+            mountPath: /etc/tls/cert-demo

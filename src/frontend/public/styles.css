@@ -1,0 +1,60 @@
+
+
+img.article-image {
+  width: 100%;
+  height: auto;
+}
+
+.portfolio-max-width {
+  max-width: 900px;
+  margin: auto;
+}
+
+.portfolio-copy {
+  max-width: 700px;
+}
+
+.portfolio-card .mdl-card__title {
+  padding-bottom: 0;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-left-padding{
+  padding-left: 0;
+}
+
+.no-bottom-padding {
+  padding-bottom: 0;
+}
+
+.padding-top {
+  padding: 10px 0 0;
+}
+
+.portfolio-share-btn {
+  position: relative;
+  float: right;
+  top: -4px;
+}
+
+.demo-card-event > .mdl-card__actions {
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    box-sizing: border-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.portfolio-contact .mdl-textfield {
+  width: 100%;
+}
+
+.portfolio-contact form {
+  max-width: 700px;
+  margin: auto;
+}
