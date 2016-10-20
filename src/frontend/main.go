@@ -104,7 +104,7 @@ func main() {
 	if *certFile != "" && *keyFile != "" {
 		l := log.New(os.Stdout, "[negroni] ", 0)
 		l.Printf("listening on %s", addr)
-		go http.ListenAndServe(":8080", redirectToHttps)
+		go http.ListenAndServe(":8080", http.HandlerFunc(redirectToHttps))
 		l.Fatal(http.ListenAndServeTLS(addr, *certFile, *keyFile, n))
 	} else {
 		n.Run(addr)
